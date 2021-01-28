@@ -1,0 +1,763 @@
+{
+	"info": {
+		"_postman_id": "37f321a9-d0fc-4e21-9350-65e723cf67d4",
+		"name": "HOT_Trainings",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Ingest Simple Metric",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"rev1\", _.random(1, 100));",
+							"var date = new Date();",
+							"var time_milliseconds = date.getTime();",
+							"pm.environment.set(\"time_milliseconds\",time_milliseconds);",
+							"//my.basic.metric,testdim=testvalue1 {{rev1}} {{time_milliseconds}}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "API-TOKEN {{API_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "mymetric 1000"
+				},
+				"url": {
+					"raw": "https://{{URL}}/api/v2/metrics/ingest",
+					"protocol": "https",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"metrics",
+						"ingest"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ingest Metric random cpu.temperature w/o entity",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"temperature_random1\", _.random(10, 70));",
+							"pm.environment.set(\"temperature_random2\", _.random(20, 75));",
+							"pm.environment.set(\"temperature_random3\", _.random(30, 80));",
+							"pm.environment.set(\"temperature_random4\", _.random(40, 85));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "API-TOKEN {{API_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "cpu.temperature,host=Host_1,cpu=1 {{temperature_random1}}\ncpu.temperature,host=Host_1,cpu=2 {{temperature_random2}}\ncpu.temperature,host=Host_2,cpu=1 {{temperature_random3}}\ncpu.temperature,host=Host_2,cpu=2 {{temperature_random4}}\ncpu.temperature,host=Host_2,cpu=3 {{temperature_random1}}\ncpu.temperature,host=Host_2,cpu=4 {{temperature_random2}}"
+				},
+				"url": {
+					"raw": "https://{{URL}}/api/v2/metrics/ingest",
+					"protocol": "https",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"metrics",
+						"ingest"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ingest Metric random cpu.temperature Host Mapping Copy",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"temperature_random1\", _.random(10, 70));",
+							"pm.environment.set(\"temperature_random2\", _.random(20, 75));",
+							"pm.environment.set(\"temperature_random3\", _.random(30, 80));",
+							"pm.environment.set(\"temperature_random4\", _.random(40, 85));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "API-TOKEN {{API_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "cpu.temperature,dt.entity.host=<HOST_ID>,host=Host_1,cpu=1 {{temperature_random1}}\ncpu.temperature,dt.entity.host=<HOST_ID>,host=Host_1,cpu=2 {{temperature_random2}}\ncpu.temperature,dt.entity.host=<HOST_ID>,host=Host_2,cpu=1 {{temperature_random3}}\ncpu.temperature,dt.entity.host=<HOST_ID>,host=Host_2,cpu=2 {{temperature_random4}}\ncpu.temperature,dt.entity.host=<HOST_ID>,host=Host_2,cpu=3 {{temperature_random1}}\ncpu.temperature,dt.entity.host=<HOST_ID>,host=Host_2,cpu=4 {{temperature_random2}}"
+				},
+				"url": {
+					"raw": "https://{{URL}}/api/v2/metrics/ingest",
+					"protocol": "https",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"metrics",
+						"ingest"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ingest Business business metrics",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"rev1\", _.random(100, 1000));",
+							"pm.environment.set(\"rev2\", _.random(200, 2000));",
+							"pm.environment.set(\"rev3\", _.random(300, 3000));",
+							"pm.environment.set(\"rev4\", _.random(400, 4000));",
+							"var date = new Date();",
+							"var time_milliseconds = date.getTime();",
+							"pm.environment.set(\"time_milliseconds\",time_milliseconds);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "API-TOKEN {{API_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "sales.revenue,region=\"NORTH\",product=\"Mobile Apps\" {{rev1}} {{time_milliseconds}}\nsales.revenue,region=\"EAST\",product=\"Mobile Apps\" {{rev2}} {{time_milliseconds}}\nsales.revenue,region=\"NORTH\",product=\"Tablet\" {{rev3}} {{time_milliseconds}}\nsales.revenue,region=\"EAST\",product=\"Tablet\" {{rev4}} {{time_milliseconds}}"
+				},
+				"url": {
+					"raw": "https://{{URL}}/api/v2/metrics/ingest",
+					"protocol": "https",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"metrics",
+						"ingest"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Metric descriptor",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Api-Token {{API_TOKEN}}"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "text/csv; header=present; charset=utf-8",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://{{URL}}/api/v2/metrics/business.shop.revenue",
+					"protocol": "https",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"metrics",
+						"business.shop.revenue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get business.shop.revenue",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Api-Token {{API_TOKEN}}"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "text/csv; header=present; charset=utf-8",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://{{URL}}/api/v2/metrics/query?metricSelector=business.shop.revenue&resolution=m&from=now-10m",
+					"protocol": "https",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"metrics",
+						"query"
+					],
+					"query": [
+						{
+							"key": "metricSelector",
+							"value": "business.shop.revenue"
+						},
+						{
+							"key": "resolution",
+							"value": "m"
+						},
+						{
+							"key": "from",
+							"value": "now-10m"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get business.shop.revenue total w/o dimensions",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Api-Token {{API_TOKEN}}"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "text/csv; header=present; charset=utf-8",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://{{URL}}/api/v2/metrics/query?metricSelector=business.shop.revenue:splitby()&resolution=m&from=now-10m",
+					"protocol": "https",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"metrics",
+						"query"
+					],
+					"query": [
+						{
+							"key": "metricSelector",
+							"value": "business.shop.revenue:splitby()"
+						},
+						{
+							"key": "resolution",
+							"value": "m"
+						},
+						{
+							"key": "from",
+							"value": "now-10m"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get business.shop.revenue split and sum by region last hour",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Api-Token {{API_TOKEN}}"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "text/csv; header=present; charset=utf-8",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://{{URL}}/api/v2/metrics/query?metricSelector=business.shop.revenue:splitby(region):sum:fold&resolution=m&from=now-1h",
+					"protocol": "https",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"metrics",
+						"query"
+					],
+					"query": [
+						{
+							"key": "metricSelector",
+							"value": "business.shop.revenue:splitby(region):sum:fold"
+						},
+						{
+							"key": "resolution",
+							"value": "m"
+						},
+						{
+							"key": "from",
+							"value": "now-1h"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get business.shop.revenue Metric filter for city",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Api-Token {{API_TOKEN}}"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "text/csv; header=present; charset=utf-8",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://{{URL}}/api/v2/metrics/query?metricSelector=business.shop.revenue:filter(eq(city,Anaheim))&resolution=m&from=now-1h",
+					"protocol": "https",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"metrics",
+						"query"
+					],
+					"query": [
+						{
+							"key": "metricSelector",
+							"value": "business.shop.revenue:filter(eq(city,Anaheim))"
+						},
+						{
+							"key": "resolution",
+							"value": "m"
+						},
+						{
+							"key": "from",
+							"value": "now-1h"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get business.shop.revenue Metric compare with -1hour",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Api-Token {{API_TOKEN}}"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "text/csv; header=present; charset=utf-8",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://{{URL}}/api/v2/metrics/query?metricSelector=business.shop.revenue:splitby():fold,business.shop.revenue:timeshift(-1h):splitby():fold&resolution=m&from=now-1h",
+					"protocol": "https",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"metrics",
+						"query"
+					],
+					"query": [
+						{
+							"key": "metricSelector",
+							"value": "business.shop.revenue:splitby():fold,business.shop.revenue:timeshift(-1h):splitby():fold"
+						},
+						{
+							"key": "resolution",
+							"value": "m"
+						},
+						{
+							"key": "from",
+							"value": "now-1h"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get DDU billing information last 30-days",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Api-Token {{API_TOKEN}}"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "text/csv; header=present; charset=utf-8",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://{{URL}}/api/v2/metrics/query?metricSelector=builtin:billing.ddu.metrics.total:fold&resolution=m&from=now-30d",
+					"protocol": "https",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"metrics",
+						"query"
+					],
+					"query": [
+						{
+							"key": "metricSelector",
+							"value": "builtin:billing.ddu.metrics.total:fold"
+						},
+						{
+							"key": "resolution",
+							"value": "m"
+						},
+						{
+							"key": "from",
+							"value": "now-30d"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query builtin:host.cpu.idle average CPU idle last hour per host",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Api-Token {{API_TOKEN}}"
+					}
+				],
+				"url": {
+					"raw": "https://{{URL}}/api/v2/metrics/query?metricSelector=builtin:host.cpu.idle:splitby(dt.entity.host):fold:avg&from=now-1h",
+					"protocol": "https",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"metrics",
+						"query"
+					],
+					"query": [
+						{
+							"key": "metricSelector",
+							"value": "builtin:host.cpu.idle:splitby(dt.entity.host):fold:avg"
+						},
+						{
+							"key": "from",
+							"value": "now-1h"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query builtin:host.cpu.usage - get max value of average CPU from last hour",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Api-Token {{API_TOKEN}}"
+					}
+				],
+				"url": {
+					"raw": "https://{{URL}}/api/v2/metrics/query?metricSelector=builtin:host.cpu.usage:avg:splitBy():fold:max&from=now-1h",
+					"protocol": "https",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"metrics",
+						"query"
+					],
+					"query": [
+						{
+							"key": "metricSelector",
+							"value": "builtin:host.cpu.usage:avg:splitBy():fold:max"
+						},
+						{
+							"key": "from",
+							"value": "now-1h"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query builtin:host.disk.usedPct with disk filter",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Api-Token {{API_TOKEN}}"
+					}
+				],
+				"url": {
+					"raw": "https://{{URL}}/api/v2/metrics/query?metricSelector=builtin:host.disk.usedPct:names:filter(prefix(dt.entity.disk.name,/opt))&from=now-2h",
+					"protocol": "https",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"metrics",
+						"query"
+					],
+					"query": [
+						{
+							"key": "metricSelector",
+							"value": "builtin:host.disk.usedPct:names:filter(prefix(dt.entity.disk.name,/opt))"
+						},
+						{
+							"key": "from",
+							"value": "now-2h"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query builtin:host.disk.usedPct with names enrichment",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Api-Token {{API_TOKEN}}"
+					}
+				],
+				"url": {
+					"raw": "https://{{URL}}/api/v2/metrics/query?metricSelector=builtin:host.disk.usedPct:names&from=now-2h",
+					"protocol": "https",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"metrics",
+						"query"
+					],
+					"query": [
+						{
+							"key": "metricSelector",
+							"value": "builtin:host.disk.usedPct:names"
+						},
+						{
+							"key": "from",
+							"value": "now-2h"
+						},
+						{
+							"key": "to",
+							"value": "now-12h",
+							"disabled": true
+						},
+						{
+							"key": "resolution",
+							"value": "15m",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": ""
+		},
+		{
+			"key": "API_TOKEN",
+			"value": ""
+		}
+	]
+}
